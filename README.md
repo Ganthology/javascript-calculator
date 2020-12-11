@@ -1,1 +1,13 @@
-# javascripy-calculator
+# Javascript Calculator
+This is one of the projects for the foundation class in The Odin Project.
+The project is to build a calculator using html, css and javascript
+Here are the link to my live preview: https://ganthology.github.io/javascript-calculator/
+
+## HTML code
+I divide the webpage into two parts, the header containing title and the calculator part formed by a display section and control section. The display section consist of two rows, one for the equation or the value keyed into the calculator, one for displaying the answer after the calculation. The control sections are buttons classed according their different group of functions including digit buttons, arithmetic operations, clear button, all clear button, change +/- sign button and equals button. I also added data-key value into the buttons where I am able to trigger the event later using keyboard, for this part I make reference from Wes Bos Javascript30 Drum Kit exercise.
+
+## CSS code
+The theme of the webpage is something similar to https://captain-usopp.github.io/Calculator/ where I got the inspiration to style my calculator page. I use flexbox for the display section to separate the display into two rows. Grid are used to create multiply grids for the buttons, I used a border radius of 100% to create circle buttons in the calculator. I also use ease-in-out transition when the button are in hover state to create a smoother user experience.
+
+## Javascript code
+I have created new functions for the arithmetic operations involved which are addition, subtraction, division, multiplication and exponentiation. To begin with, there is an addNumber function that receive event text content and add into the equation display row. There is also an addOperation function to add operators into the equation display row. The equation display row are limited to 17 characters. For the addOperation function, there are 3 scenarios taken into consideration, which are when the calculator first started, when the last results are reused and when the operator are entered for the second time. Then I proceed with the operate function that do the calculation based on the current operator and return the values into the answer display row. For the clear function, I removed the last character of the equation display row everytime it is triggered. For the allClear function, all display values, operators and numbers stored in memory are reset. For the changeSign function, the program check the first character of the equation display row to proceed with the sign changing. And finally, an activateKey function is associated with each buttons with unique key-values to activate the calculator from keyboard.
