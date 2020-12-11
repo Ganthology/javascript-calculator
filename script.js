@@ -164,6 +164,12 @@ function power (number, power) {
 	return Math.pow(number, power);
 }
 
+// activate corresponding key code
+function activateKey(e) {
+	// one is the key value for each button, one is the 
+	const buttonClicked = document.querySelector(`button[data-key="${e.keyCode}"]`);
+	buttonClicked.click();
+}
 // add event listeners to each buttons
 const digits = document.querySelectorAll(".digit");
 digits.forEach(digit => digit.addEventListener('click', addNumber));
@@ -182,3 +188,6 @@ equalButton.addEventListener('click', operate);
 
 const signButton = document.getElementById('sign');
 signButton.addEventListener('click', changeSign);
+
+// use keyboard to use the calculator
+window.addEventListener('keydown', activateKey);
