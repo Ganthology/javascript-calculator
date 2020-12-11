@@ -6,7 +6,6 @@
 let operator = "";
 let previousNumber = 0;
 let currentNumber = 0;
-
 let displayEquation = document.querySelector('.equation');
 let displayAnswer = document.querySelector('.answer')
 // let equation = displayEquation.textContent;
@@ -63,6 +62,24 @@ function addOperation (event) {
 
 }
 
+function changeSign() {
+	let firstChar = displayEquation.textContent.slice(0, 1);
+	// Check the first character of equation row display
+	// If it is not equals to - and not empty then change sign
+	// changedSign variable to take note whether the signed are changed	
+	// the Sign are change everytime the changeSign event triggered
+	displayEquation.textContent = (firstChar != '-' && firstChar !='') ? '-' + displayEquation.textContent : displayEquation.textContent.slice(1);
+	previousNumber = -previousNumber;
+	// if (firstChar != '-' && firstChar != '') {
+	// 	displayEquation.textContent = '-' + displayEquation.textContent;
+	// 	previousNumber = -previousNumber;
+	// }
+	// else {
+	// 	displayEquation.textContent = displayEquation.textContent.slice(1);
+	// 	previousNumber = -previousNumber;
+	// }
+}
+
 function operate() {
 	if (currentNumber == ''){
 		let index = (operator != 'xy') ? displayEquation.textContent.indexOf(operator) : displayEquation.textContent.indexOf('^');
@@ -91,6 +108,7 @@ function operate() {
 	previousNumber = 0;
 	currentNumber = 0;
 	// reset the equation row display
+	changedSign = false;
 }
 
 function allClear() {
@@ -145,3 +163,6 @@ operationButton.forEach(operate => operate.addEventListener('click', addOperatio
 
 const equalButton = document.getElementById('equals');
 equalButton.addEventListener('click', operate);
+
+const signButton = document.getElementById('sign');
+signButton.addEventListener('click', changeSign);
