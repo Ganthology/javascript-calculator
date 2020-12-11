@@ -14,36 +14,49 @@ let displayAnswer = document.querySelector('.answer')
 
 
 function addNumber (event) {
+	// set limit for equation row display
 	if(displayEquation.textContent.length >= 16) {
 		alert("You have reached the limit");
 		return;
 	}
+	// digits entered
 	let num = event.target.textContent.toString();
+	// if decimal are entered, check if the equation already include a decimal
 	if(num == '.'){
 		if(!displayEquation.textContent.includes('.'))
 			displayEquation.textContent += '.';
-	}else{
+	}
+	else{
 		displayEquation.textContent += num;
 	}
 }
 
 function addOperation (event) {
+	// set limit for equation row display
 	if(displayEquation.textContent.length >= 16) {
 		alert("You have reached the limit");
 		return;
 	}
+	// cannot add operator if there is no digit input
+	if(displayEquation.textContent == '') {
+		return;
+	}
+	// when operator is added for the first time
 	if(operator=="") {
 		operator = event.target.textContent.toString();
 		previousNumber = parseFloat(displayEquation.textContent);
-		displayEquation.textContent+=operator;
-	} else if(operator=="n") {
+		(operator != 'xy') ? displayEquation.textContent+=operator : displayEquation.textContent+='^';
+	}
+	// when operator is added after operation
+	else if(operator=="n") {
 		previousNumber = parseFloat(displayAnswer.textContent);
 		operator = event.target.textContent.toString();
-		displayEquation.textContent = previousNumber+operator;
+		displayEquation.textContent = (operator != 'xy') ? previousNumber+operator : previousNumber+'^';
 		displayAnswer.textContent = '';
 	}
+	// when operator is entered second time, the equation are calculated automatically
 	else {
-		let index = displayEquation.textContent.indexOf(operator);
+		let index = (operator != 'xy') ? displayEquation.textContent.indexOf(operator) : displayEquation.textContent.indexOf('^');
 		currentNumber = parseFloat(displayEquation.textContent.slice(index + 1));
 		operate();
 	}
@@ -64,8 +77,13 @@ function operate () {
 		case '÷':
 			displayAnswer.textContent = divide(previousNumber, currentNumber);
 			break;
+		case 'xy':
+			displayAnswer.textContent = power(previousNumber, currentNumber);
+			break;
 	}
 	operator='n';
+	// reset the equation row display
+	displayEquation.textContent = "";
 }
 
 function allClear() {
@@ -73,6 +91,7 @@ function allClear() {
 	displayAnswer.textContent = '';
 	previousNumber = 0;
 	currentNumber = 0;
+	operator = '';
 }
 
 function clear() {
@@ -96,7 +115,7 @@ function divide (number1, number2) {
 }
 
 function power (number, power) {
-	return Math.pow(number1, number2);
+	return Math.pow(number, power);
 }
 
 const digits = document.querySelectorAll(".digit");
