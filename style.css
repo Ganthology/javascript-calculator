@@ -78,6 +78,9 @@ button{
     margin: 0;
     cursor: pointer;
 }
+button#sign{
+    padding: 8px 15px 16px 12px;
+}
 button:hover{
     background-color: goldenrod;
     color: #212121;
