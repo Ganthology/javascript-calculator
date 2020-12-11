@@ -8,6 +8,7 @@ let previousNumber = 0;
 let currentNumber = 0;
 let displayEquation = document.querySelector('.equation');
 let displayAnswer = document.querySelector('.answer')
+let answerStored;
 // let equation = displayEquation.textContent;
 // let answer = displayAnswer.textContent;
 
@@ -87,21 +88,27 @@ function operate() {
 	}
 	switch(operator){
 		case '+':
-			displayAnswer.textContent = add(previousNumber,currentNumber);
+			answerStored = add(previousNumber,currentNumber);
 			break;
 		case '-':
-			displayAnswer.textContent = subtract(previousNumber, currentNumber);
+			answerStored = subtract(previousNumber, currentNumber);
 			break;
 		case 'x':
-			displayAnswer.textContent = multiply(previousNumber, currentNumber);
+			answerStored = multiply(previousNumber, currentNumber);
 			break;
 		case '÷':
-			displayAnswer.textContent = divide(previousNumber, currentNumber);
+			answerStored = divide(previousNumber, currentNumber);
 			break;
 		case 'xy':
-			displayAnswer.textContent = power(previousNumber, currentNumber);
+			answerStored = power(previousNumber, currentNumber);
 			break;
 	}
+	if (answerStored > 1e10) {
+		displayAnswer.textContent = answerStored.toExponential(2);
+	} else {
+		displayAnswer.textContent = answerStored;
+	}
+
 	// in case the user want to use last results
 	operator='n';
 	// reset the previous number and current number memory
