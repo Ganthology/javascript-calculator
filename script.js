@@ -36,7 +36,13 @@ function addOperation (event) {
 		operator = event.target.textContent.toString();
 		previousNumber = parseFloat(displayEquation.textContent);
 		displayEquation.textContent+=operator;
-	} else {
+	} else if(operator=="n") {
+		previousNumber = parseFloat(displayAnswer.textContent);
+		operator = event.target.textContent.toString();
+		displayEquation.textContent = previousNumber+operator;
+		displayAnswer.textContent = '';
+	}
+	else {
 		let index = displayEquation.textContent.indexOf(operator);
 		currentNumber = parseFloat(displayEquation.textContent.slice(index + 1));
 		operate();
@@ -59,6 +65,7 @@ function operate () {
 			displayAnswer.textContent = divide(previousNumber, currentNumber);
 			break;
 	}
+	operator='n';
 }
 
 function allClear() {
