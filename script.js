@@ -56,14 +56,18 @@ function addOperation (event) {
 	}
 	// when operator is entered second time, the equation are calculated automatically
 	else {
-		let index = (operator != 'xy') ? displayEquation.textContent.indexOf(operator) : displayEquation.textContent.indexOf('^');
-		currentNumber = parseFloat(displayEquation.textContent.slice(index + 1));
+		// let index = (operator != 'xy') ? displayEquation.textContent.indexOf(operator) : displayEquation.textContent.indexOf('^');
+		// currentNumber = parseFloat(displayEquation.textContent.slice(index + 1));
 		operate();
 	}
 
 }
 
-function operate () {
+function operate() {
+	if (currentNumber == ''){
+		let index = (operator != 'xy') ? displayEquation.textContent.indexOf(operator) : displayEquation.textContent.indexOf('^');
+		currentNumber = parseFloat(displayEquation.textContent.slice(index + 1));
+	}
 	switch(operator){
 		case '+':
 			displayAnswer.textContent = add(previousNumber,currentNumber);
@@ -81,12 +85,18 @@ function operate () {
 			displayAnswer.textContent = power(previousNumber, currentNumber);
 			break;
 	}
+	// in case the user want to use last results
 	operator='n';
+	// reset the previous number and current number memory
+	previousNumber = 0;
+	currentNumber = 0;
 	// reset the equation row display
-	displayEquation.textContent = "";
 }
 
 function allClear() {
+	// clear equation row display
+	// clear answer row display
+	// reset previous number, current number and operator memory
 	displayEquation.textContent = '';
 	displayAnswer.textContent = '';
 	previousNumber = 0;
@@ -95,9 +105,11 @@ function allClear() {
 }
 
 function clear() {
+	// remove the last character from the equation row display
 	displayEquation.textContent = displayEquation.textContent.slice(0, -1);
 }
 
+// functions for addition, subtraction, multiplication, division, exponentiation
 function add (number1, number2) {
 	return number1 + number2;
 }
@@ -118,6 +130,7 @@ function power (number, power) {
 	return Math.pow(number, power);
 }
 
+// add event listeners to each buttons
 const digits = document.querySelectorAll(".digit");
 digits.forEach(digit => digit.addEventListener('click', addNumber));
 
@@ -129,3 +142,6 @@ clearButton.addEventListener('click', clear, false);
 
 const operationButton = document.querySelectorAll('.operation');
 operationButton.forEach(operate => operate.addEventListener('click', addOperation));
+
+const equalButton = document.getElementById('equals');
+equalButton.addEventListener('click', operate);
