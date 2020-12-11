@@ -4,17 +4,14 @@
 // + - % x = backspace clear exponent factorial remainder squareroot 
 // digits 0 1 2 3 4 5 6 7 8 9 .
 let operator = "";
-let previousNumber = "";
-let currentNumber = "";
+let previousNumber = 0;
+let currentNumber = 0;
 
 let displayEquation = document.querySelector('.equation');
 let displayAnswer = document.querySelector('.answer')
-let equation = displayEquation.textContent;
-let answer = displayAnswer.textContent;
+// let equation = displayEquation.textContent;
+// let answer = displayAnswer.textContent;
 
-function operate (event) {
-	operator = event;
-}
 
 function addNumber (event) {
 	if(displayEquation.textContent.length >= 16) {
@@ -30,9 +27,45 @@ function addNumber (event) {
 	}
 }
 
+function addOperation (event) {
+	if(displayEquation.textContent.length >= 16) {
+		alert("You have reached the limit");
+		return;
+	}
+	if(operator=="") {
+		operator = event.target.textContent.toString();
+		previousNumber = parseFloat(displayEquation.textContent);
+		displayEquation.textContent+=operator;
+	} else {
+		let index = displayEquation.textContent.indexOf(operator);
+		currentNumber = parseFloat(displayEquation.textContent.slice(index + 1));
+		operate();
+	}
+
+}
+
+function operate () {
+	switch(operator){
+		case '+':
+			displayAnswer.textContent = add(previousNumber,currentNumber);
+			break;
+		case '-':
+			displayAnswer.textContent = subtract(previousNumber, currentNumber);
+			break;
+		case 'x':
+			displayAnswer.textContent = multiply(previousNumber, currentNumber);
+			break;
+		case '÷':
+			displayAnswer.textContent = divide(previousNumber, currentNumber);
+			break;
+	}
+}
+
 function allClear() {
 	displayEquation.textContent = '';
 	displayAnswer.textContent = '';
+	previousNumber = 0;
+	currentNumber = 0;
 }
 
 function clear() {
@@ -67,3 +100,6 @@ allClearButton.addEventListener('click', allClear, false);
 
 const clearButton = document.getElementById('clear');
 clearButton.addEventListener('click', clear, false);
+
+const operationButton = document.querySelectorAll('.operation');
+operationButton.forEach(operate => operate.addEventListener('click', addOperation));
