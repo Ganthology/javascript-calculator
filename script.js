@@ -11,7 +11,10 @@ let displayAnswer = document.querySelector('.answer')
 let answerStored;
 // let equation = displayEquation.textContent;
 // let answer = displayAnswer.textContent;
-
+let countDecimals = function (value) {
+    if(Math.floor(value) === value) return 0;
+    return value.toString().split(".")[1].length || 0; 
+}
 
 function addNumber (event) {
 	// set limit for equation row display
@@ -105,7 +108,13 @@ function operate() {
 	}
 	if (answerStored > 1e10) {
 		displayAnswer.textContent = answerStored.toExponential(2);
-	} else {
+	} 
+	else if (countDecimals(answerStored) >= 8)
+	{
+		displayAnswer.textContent = answerStored.toFixed(6)
+	}
+	else
+	{
 		displayAnswer.textContent = answerStored;
 	}
 
